@@ -11,8 +11,16 @@ router.get("/getStudents", (req, res) => {
 });
 
 router.post("/postStudent", async (req, res) => {
-  var stu = new Student(req.body);
-  await stu.save();
+  try {
+    // res.status(201);
+    // res.json();
+    var stu = new Student(req.body);
+    await stu.save();
+    res.send(stu);
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(req.body);
 });
 
 router.put("/putStudent/:_id", async (req, res) => {
@@ -21,21 +29,22 @@ router.put("/putStudent/:_id", async (req, res) => {
     stu.name = req.body.name;
     stu.gpa = req.body.gpa;
     stu.id = req.body.id;
-    console.log(req.body);
     await stu.save();
+    res.send(stu);
   } catch (error) {
-    res.send(error);
+    console.log(error);
   }
+  console.log(req.body);
 });
 
 router.delete("/deleteStudent/:_id", async (req, res) => {
   await Student.deleteOne({ _id: req.params._id });
-  console.log(req.params._id);
   Student.find({})
     .lean()
     .then((students) => {
       res.json(students);
     });
+  console.log(req.params._id);
 });
 
 router.get("/getStudentByID/:_id", async (req, res) => {

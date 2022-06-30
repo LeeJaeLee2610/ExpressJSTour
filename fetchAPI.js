@@ -36,8 +36,10 @@ function doPost() {
       response.json();
     })
     .then(() => {
-      alert("Da them");
-      window.location.reload();
+      setTimeout(() => {
+        alert("POST");
+        window.location.reload();
+      }, 1000);
     });
 }
 
@@ -49,8 +51,10 @@ function doDelete(_id) {
     },
   };
   fetch(deleteAPI + "/" + _id, options).then(() => {
-    alert("Da Xoa");
-    window.location.reload();
+    setTimeout(() => {
+      alert("Delete");
+      window.location.reload();
+    }, 1000);
   });
 }
 
@@ -69,8 +73,10 @@ function doPut(_id) {
   fetch(putAPI + "/" + _id, options)
     .then((res) => res.json())
     .then(() => {
-      console.log("Da PUT");
-      window.location.reload();
+      setTimeout(() => {
+        alert("PUT");
+        window.location.reload();
+      }, 1000);
     });
 }
 

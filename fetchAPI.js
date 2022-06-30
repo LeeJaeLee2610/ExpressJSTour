@@ -4,12 +4,7 @@ var deleteAPI = "http://localhost:3030/students/deleteStudent";
 var putAPI = "http://localhost:3030/students/putStudent";
 var getStudentAPI = "http://localhost:3030/students/getStudentByID";
 
-function start() {
-  doGet(renderStudent);
-  addStudent();
-}
-
-start();
+doGet(renderStudent);
 
 function doGet(callback) {
   fetch(getAPI)
@@ -19,63 +14,64 @@ function doGet(callback) {
     .then(callback);
 }
 
-function doPost(data, callback) {
+function doPost() {
+  var name = document.querySelector(".name").value;
+  var gpa = parseFloat(document.querySelector(".gpa").value);
+  var id = parseInt(document.querySelector(".id").value);
+  var formData = {
+    name: name,
+    gpa: gpa,
+    id: id,
+  };
   var options = {
     method: "POST",
     headers: {
       Accept: "application.json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(formData),
   };
   fetch(postAPI, options)
     .then(function (response) {
       response.json();
     })
-    .then(callback);
+    .then(() => {
+      alert("Da them");
+      window.location.reload();
+    });
 }
 
-function addStudent() {
-  var sub = document.querySelector(".create");
-  sub.addEventListener("click", () => {
-    var name = document.querySelector(".name").value;
-    var gpa = parseFloat(document.querySelector(".gpa").value);
-    var id = parseInt(document.querySelector(".id").value);
-    var formData = {
-      name: name,
-      gpa: gpa,
-      id: id,
-    };
-    doPost(formData, doGet(renderStudent));
-  });
-}
-
-function deleteStudent(_id) {
+function doDelete(_id) {
   const options = {
     method: "Delete",
     headers: {
       "Content-Type": "application/json",
     },
   };
-  fetch(deleteAPI + "/" + _id, options).then(doGet(renderStudent));
+  fetch(deleteAPI + "/" + _id, options).then(() => {
+    alert("Da Xoa");
+    window.location.reload();
+  });
 }
 
-function putStudent(_id){
+function doPut(_id) {
   data = {
-    name: document.querySelector('.nameUpdate').value,
-    gpa: document.querySelector('.gpaUpdate').value,
-  }
+    name: document.querySelector(".nameUpdate").value,
+    gpa: document.querySelector(".gpaUpdate").value,
+  };
   var options = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data)
-  }
-  // fetch(putAPI + "/" + _id, options)
-  //   .then(res => res.json())
-  //   .then()
-  console.log(data.name)
+    body: JSON.stringify(data),
+  };
+  fetch(putAPI + "/" + _id, options)
+    .then((res) => res.json())
+    .then(() => {
+      console.log("Da PUT");
+      window.location.reload();
+    });
 }
 
 function getStudentByID(_id) {
@@ -84,9 +80,9 @@ function getStudentByID(_id) {
     .then((res) => res.json())
     .then((data) => {
       document.querySelector(".studentByID").innerHTML = `
-        <input type="text" name="nameUpdate" value='${data.name}'/>
-        <input type="text" name="gpaUpdate" value="${data.gpa}"/>
-        <button onClick="putStudent('${data._id}')">Update</button>
+        <input type="text" class="nameUpdate" value='${data.name}'/>
+        <input type="text" class="gpaUpdate" value="${data.gpa}"/>
+        <button onClick="doPut('${data._id}')">Update</button>
       `;
     });
 }
@@ -99,7 +95,7 @@ function renderStudent(students) {
           <span>${student.name}</span><br>
           <span>${student.gpa}</span><br>
           <button onClick="getStudentByID('${student._id}')">Update</button>
-          <button onClick="deleteStudent('${student._id}')">Delete</button>
+          <button onClick="doDelete('${student._id}')">Delete</button>
         </li>
     `;
   });

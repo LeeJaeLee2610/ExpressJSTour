@@ -13,7 +13,6 @@ router.get("/getStudents", (req, res) => {
 router.post("/postStudent", async (req, res) => {
   var stu = new Student(req.body);
   await stu.save();
-  res.send("OK");
 });
 
 router.put("/putStudent/:_id", async (req, res) => {
@@ -24,7 +23,6 @@ router.put("/putStudent/:_id", async (req, res) => {
     stu.id = req.body.id;
     console.log(req.body);
     await stu.save();
-    res.send(req.params._id);
   } catch (error) {
     res.send(error);
   }

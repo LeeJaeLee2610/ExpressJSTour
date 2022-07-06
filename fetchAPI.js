@@ -4,7 +4,26 @@ var deleteAPI = "http://localhost:3030/students/deleteStudent";
 var putAPI = "http://localhost:3030/students/putStudent";
 var getStudentAPI = "http://localhost:3030/students/getStudentByID";
 var searchAPI = "http://localhost:3030/search";
+var testSession = "http://localhost:3030/students/test";
 
+function test1() {
+  fetch(testSession)
+    .then(function (res) {
+      return res.json();
+    })
+    .then((data) => {
+      document.querySelector(".test").innerHTML = data.student
+        .map((item) => {
+          return `
+          <div>${item.name}</div>
+        `;
+        })
+        .join("");
+      console.log(data);
+    });
+}
+
+test1();
 doGet(renderStudent);
 
 function doGet(callback) {
@@ -24,7 +43,6 @@ function doPost() {
     gpa: gpa,
     id: id,
   };
-  document.cookie = `data=${formData}`;
   var options = {
     method: "POST",
     headers: {
@@ -142,3 +160,4 @@ function handleSearch(data) {
   });
   search.innerHTML = htmls.join("");
 }
+

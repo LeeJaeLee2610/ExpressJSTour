@@ -28,10 +28,6 @@ router.post("/postStudent", async (req, res) => {
   // console.log(req.body);
 });
 
-router.get("/postStudent", (req, res) => {
-  res.send("Ok");
-});
-
 router.put("/putStudent/:_id", async (req, res) => {
   try {
     const stu = await Student.findOne({ _id: req.params._id });
@@ -44,6 +40,22 @@ router.put("/putStudent/:_id", async (req, res) => {
     console.log(error);
   }
   console.log(req.body);
+});
+
+// router.get("/set", (req, res) => {
+//   req.session.student = {
+//     name: "Duc Cuong",
+//   };
+//   res.send("Ok");
+// });
+
+router.get("/test", (req, res) => {
+  Student.find({})
+    .lean()
+    .then((students) => {
+      req.session.student = students;
+      res.send(req.session);
+    });
 });
 
 router.delete("/deleteStudent/:_id", async (req, res) => {

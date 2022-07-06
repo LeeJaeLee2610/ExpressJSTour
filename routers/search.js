@@ -17,11 +17,6 @@ Teacher.find({}, function (err, teachers) {
   }
 });
 
-// router.get("/getAll", (req, res) => {
-//   console.log(tmp);
-//   res.send(tmp);
-// });
-
 router.get("/", (req, res) => {
   var result = {
     search: [],

@@ -12,17 +12,14 @@ app.use(bodyParser.json());
 
 mongoose.connect("mongodb://localhost:27017/demo");
 
-// app.use(
-//   session({
-//     key: "Stu",
-//     secret: "demo",
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       expires: 60 * 60 * 24,
-//     },
-//   })
-// );
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, httpOnly: true, maxAge: 60 * 60 * 24 },
+  })
+);
 
 router(app);
 

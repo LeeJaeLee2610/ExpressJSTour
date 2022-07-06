@@ -12,15 +12,24 @@ router.get("/getStudents", (req, res) => {
 
 router.post("/postStudent", async (req, res) => {
   try {
-    // res.status(201);
-    // res.json();
+    // const { name, gpa, id } = req.body;
+    // req.session.Stu = {
+    //   name: name,
+    //   gpa: gpa,
+    //   id: id,
+    // };
+    // console.log(req.session.Stu);
     var stu = new Student(req.body);
     await stu.save();
     res.send(stu);
   } catch (error) {
     console.log(error);
   }
-  console.log(req.body);
+  // console.log(req.body);
+});
+
+router.get("/postStudent", (req, res) => {
+  res.send("Ok");
 });
 
 router.put("/putStudent/:_id", async (req, res) => {

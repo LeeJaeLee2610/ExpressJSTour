@@ -3,6 +3,7 @@ var postAPI = "http://localhost:3030/students/postStudent";
 var deleteAPI = "http://localhost:3030/students/deleteStudent";
 var putAPI = "http://localhost:3030/students/putStudent";
 var getStudentAPI = "http://localhost:3030/students/getStudentByID";
+var searchAPI = "http://localhost:3030/search";
 
 doGet(renderStudent);
 
@@ -23,6 +24,7 @@ function doPost() {
     gpa: gpa,
     id: id,
   };
+  document.cookie = `data=${formData}`;
   var options = {
     method: "POST",
     headers: {
@@ -98,12 +100,45 @@ function renderStudent(students) {
   var htmls = students.map((student) => {
     return `
         <li class=${student.id}>
-          <span>${student.name}</span><br>
-          <span>${student.gpa}</span><br>
-          <button onClick="getStudentByID('${student._id}')">Update</button>
-          <button onClick="doDelete('${student._id}')">Delete</button>
+          <div>
+            <span>${student.name}</span>
+            <span>${student.gpa}</span></div>
+          <div class="btn">
+            <button onClick="getStudentByID('${student._id}')">Update</button>
+            <button onClick="doDelete('${student._id}')">Delete</button>
+          </div>
         </li>
     `;
   });
+  console.log(students);
   listS.innerHTML = htmls.join("");
+}
+
+var search_input = document.querySelector(".searchByName");
+
+search_input.addEventListener("input", handleChange);
+
+document.querySelector(".about").innerHTML = `<span>Khong co gi</span>`;
+
+function handleChange(e) {
+  if (e.target.value == "") {
+    document.querySelector(".about").innerHTML = `<span>Khong co gi</span>`;
+  } else {
+    fetch(`${searchAPI}?name=${e.target.value}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        handleSearch(data);
+      });
+  }
+  console.log(`${searchAPI}?name=${e.target.value}`);
+}
+
+function handleSearch(data) {
+  const search = document.querySelector(".about");
+  var htmls = data.search.map((item) => {
+    return `<span>${item.name}</span><br />`;
+  });
+  search.innerHTML = htmls.join("");
 }

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const router = require("./routers");
+const session = require("express-session");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,6 +12,30 @@ app.use(bodyParser.json());
 
 mongoose.connect("mongodb://localhost:27017/demo");
 
+// app.use(
+//   session({
+//     key: "Stu",
+//     secret: "demo",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       expires: 60 * 60 * 24,
+//     },
+//   })
+// );
+
 router(app);
+
+// app.use(session({ secret: "Shh, its a secret!" }));
+
+// app.get("/test", function (req, res) {
+//   if (req.session.page_views) {
+//     req.session.page_views++;
+//     res.send("You visited this page " + req.session.page_views + " times");
+//   } else {
+//     req.session.page_views = 1;
+//     res.send("Welcome to this page for the first time!");
+//   }
+// });
 
 app.listen(3030);

@@ -23,6 +23,8 @@ app.use(
 
 router(app);
 
+app.post("/upload-profile-pic", (req, res) => {});
+
 // app.use(session({ secret: "Shh, its a secret!" }));
 
 // app.get("/test", function (req, res) {

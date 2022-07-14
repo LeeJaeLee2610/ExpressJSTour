@@ -10,19 +10,24 @@
   <body>
     <div class="upload-file-container">
       <form
-        action="/upload-profile-pic"
+        action="http://localhost:3030/single"
         method="post"
         enctype="multipart/form-data"
       >
         <div>
           <label for="">Avatar</label>
-          <input type="file" name="profile_pic" />
+          <input type="file" name="image" />
         </div>
         <div>
           <button type="submit" class="btn-save">Save file</button>
         </div>
       </form>
     </div>
+    <img
+      src="public/images/1657810718869-1008-5616x3744.jpg"
+      width="500px"
+      alt=""
+    />
     <!-- <div class="upload-file-container">
       <form
         action="/upload-profile-pic"

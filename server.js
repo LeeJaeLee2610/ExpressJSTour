@@ -5,6 +5,10 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const router = require("./routers");
 const session = require("express-session");
+// const path = require("path");
+const multer = require("multer");
+const helpers = require("./helpers.js");
+var appRoot = require("app-root-path");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,20 +25,34 @@ app.use(
   })
 );
 
-router(app);
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, appRoot + "/public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
-app.post("/upload-profile-pic", (req, res) => {});
+const upload = multer({
+  storage: fileStorageEngine,
+  fileFilter: helpers.imageFilter,
+});
 
-// app.use(session({ secret: "Shh, its a secret!" }));
+app.post("/single", upload.single("image"), (req, res) => {
+  console.log(req.file);
+  res.send(JSON.stringify(req.file));
+});
 
-// app.get("/test", function (req, res) {
-//   if (req.session.page_views) {
-//     req.session.page_views++;
-//     res.send("You visited this page " + req.session.page_views + " times");
-//   } else {
-//     req.session.page_views = 1;
-//     res.send("Welcome to this page for the first time!");
-//   }
+// app.get("/demoUpload", (req, res) => {
+//   res.send(JSON.stringify(req.file));
 // });
+
+// app.post("/multiple", upload.array("images", 3), (req, res) => {
+//   console.log(req.files);
+//   res.send("Multiple files upload success");
+// });
+
+router(app);
 
 app.listen(3030);

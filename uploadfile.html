@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./public/style/styles.css" />
   </head>
   <body>
-    <form
+    <!-- <form
       method="POST"
       action="http://localhost:3030/single"
       enctype="multipart/form-data"
@@ -24,7 +24,7 @@
       <div>
         <button type="submit">Upload</button>
       </div>
-    </form>
+    </form> -->
     <!-- <div class="upload-file-container">
       <form
         action="/upload-profile-pic"
@@ -40,6 +40,15 @@
         </div>
       </form>
     </div> -->
+    <div>
+      <input type="file" class="image" name="image" />
+    </div>
+    <div>
+      <input type="text" class="name" name="name" />
+    </div>
+    <div>
+      <button class="btn-upload" type="button">Upload</button>
+    </div>
     <script src="./fetchFormData.js"></script>
   </body>
 </html>

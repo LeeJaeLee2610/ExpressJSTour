@@ -1,14 +1,17 @@
 var postAPI = "http://localhost:3030/single";
 
-function doPost() {
-  var input = document.querySelector(".image");
+document.querySelector(".btn-upload").addEventListener("click", () => {
+  var input = document.querySelector(".image").files[0];
+  var name = document.querySelector(".name").value;
+  upload(input, name);
+});
 
-  var data = new FormData();
-  data.append("file", input.files[0]);
-  data.append("user", "hubot");
-
+function upload(image, name) {
+  var formData = new FormData();
+  formData.append("image", image);
+  formData.append("name", name);
   fetch(postAPI, {
     method: "POST",
-    body: data,
+    body: formData,
   });
 }

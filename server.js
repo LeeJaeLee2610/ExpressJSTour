@@ -47,6 +47,10 @@ app.post("/single", upload.single("image"), (req, res) => {
   res.send(req.body);
 });
 
+app.put('/update', upload.single('image'), (req, res) => {
+
+})
+
 // app.get("/demoUpload", (req, res) => {
 //   res.send(JSON.stringify(req.file));
 // });

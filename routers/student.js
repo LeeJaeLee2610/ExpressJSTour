@@ -12,15 +12,9 @@ router.get("/getStudents", (req, res) => {
 
 router.post("/postStudent", async (req, res) => {
   try {
-    // const { name, gpa, id } = req.body;
-    // req.session.Stu = {
-    //   name: name,
-    //   gpa: gpa,
-    //   id: id,
-    // };
-    // console.log(req.session.Stu);
     var stu = new Student(req.body);
     await stu.save();
+    console.log(req.body)
     res.send(stu);
   } catch (error) {
     console.log(error);

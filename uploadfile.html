@@ -8,26 +8,23 @@
     <link rel="stylesheet" href="./public/style/styles.css" />
   </head>
   <body>
-    <div class="upload-file-container">
-      <form
-        action="http://localhost:3030/single"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <div>
-          <label for="">Avatar</label>
-          <input type="file" name="image" />
-        </div>
-        <div>
-          <button type="submit" class="btn-save">Save file</button>
-        </div>
-      </form>
-    </div>
-    <img
-      src="public/images/1657810718869-1008-5616x3744.jpg"
-      width="500px"
-      alt=""
-    />
+    <form
+      method="POST"
+      action="http://localhost:3030/single"
+      enctype="multipart/form-data"
+    >
+      <div>
+        <label>Select your profile picture:</label>
+        <input type="file" name="image" />
+      </div>
+      <div>
+        <label for="">Name</label>
+        <input type="text" name="name" />
+      </div>
+      <div>
+        <button type="submit">Upload</button>
+      </div>
+    </form>
     <!-- <div class="upload-file-container">
       <form
         action="/upload-profile-pic"
@@ -43,5 +40,6 @@
         </div>
       </form>
     </div> -->
+    <script src="./fetchFormData.js"></script>
   </body>
 </html>

@@ -39,9 +39,12 @@ const upload = multer({
   fileFilter: helpers.imageFilter,
 });
 
+// upload.single("image")
+
 app.post("/single", upload.single("image"), (req, res) => {
   console.log(req.file);
-  res.send(JSON.stringify(req.file));
+  console.log(req.body);
+  res.send(req.body);
 });
 
 // app.get("/demoUpload", (req, res) => {

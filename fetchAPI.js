@@ -1,10 +1,21 @@
-var getAPI = "http://localhost:3030/students/getStudents";
-var postAPI = "http://localhost:3030/students/postStudent";
-var deleteAPI = "http://localhost:3030/students/deleteStudent";
-var putAPI = "http://localhost:3030/students/putStudent";
-var getStudentAPI = "http://localhost:3030/students/getStudentByID";
-var searchAPI = "http://localhost:3030/search";
-var testSession = "http://localhost:3030/students/test";
+var getAPI = "http://localhost:3031/students/getStudents";
+var postAPI = "http://localhost:3031/students/postStudent";
+var deleteAPI = "http://localhost:3031/students/deleteStudent";
+var putAPI = "http://localhost:3031/students/putStudent";
+var getStudentAPI = "http://localhost:3031/students/getStudentByID";
+var searchAPI = "http://localhost:3031/search";
+var testSession = "http://localhost:3031/students/test";
+
+sessionStorage.setItem("username", "emcuong");
+
+function test2() {
+  fetch("http://localhost:3030/uidoi/23/24")
+    .then(function (response) {
+      return response.json();
+    })
+    .then((data) => console.log(data));
+  console.log(sessionStorage.getItem("username"));
+}
 
 function test1() {
   fetch(testSession)
@@ -24,6 +35,7 @@ function test1() {
 }
 
 test1();
+test2();
 doGet(renderStudent);
 
 function doGet(callback) {

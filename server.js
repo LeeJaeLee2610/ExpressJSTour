@@ -9,8 +9,17 @@ const session = require("express-session");
 const multer = require("multer");
 const helpers = require("./helpers.js");
 var appRoot = require("app-root-path");
+const RedisStore = require("connect-redis")(session);
+const { createClient } = require("redis");
+let redisClient = createClient({ legacyMode: true });
+redisClient.connect().catch(console.error);
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -19,11 +28,26 @@ mongoose.connect("mongodb://localhost:27017/demo");
 app.use(
   session({
     secret: "keyboard cat",
-    resave: false,
+    store: new RedisStore({ client: redisClient }),
+    resave: true,
     saveUninitialized: true,
     cookie: { secure: false, httpOnly: true, maxAge: 60 * 60 * 24 },
   })
 );
+
+if (app.get("env") === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
+}
+
+app.post("/setSession", (req, res) => {
+  req.session.tmp = req.body;
+  res.send(req.session);
+});
+
+app.get("/getSession", (req, res) => {
+  res.send(req.session);
+});
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -47,9 +71,7 @@ app.post("/single", upload.single("image"), (req, res) => {
   res.send(req.body);
 });
 
-app.put('/update', upload.single('image'), (req, res) => {
-
-})
+app.put("/update", upload.single("image"), (req, res) => {});
 
 // app.get("/demoUpload", (req, res) => {
 //   res.send(JSON.stringify(req.file));
@@ -62,4 +84,4 @@ app.put('/update', upload.single('image'), (req, res) => {
 
 router(app);
 
-app.listen(3030);
+app.listen(3031);

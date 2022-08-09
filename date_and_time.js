@@ -1,11 +1,11 @@
 const date = require("date-and-time");
 
-// Creating object of current date and time
-// by using Date()
 const now = new Date(Date.now());
-// Formatting the date and time
-// by using date.format() method
-// const value = date.format(now, "YYYY/MM/DD HH:mm:ss");
+// const tmp = date.format(now, "YYYY/MM/DD HH:mm:ss");
 
-// Display the result
-console.log(now);
+const now1 = new Date(2022, 8, 9, 23, 0, 0);
+// const tmp1 = date.format(now1, "YYYY/MM/DD HH:mm:ss");
+
+const res = new Date(now1.getTime() - now.getTime());
+const res1 = date.format(res, "mm");
+console.log(res1);

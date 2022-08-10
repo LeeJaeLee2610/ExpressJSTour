@@ -9,17 +9,12 @@ const session = require("express-session");
 const multer = require("multer");
 const helpers = require("./helpers.js");
 var appRoot = require("app-root-path");
-const RedisStore = require("connect-redis")(session);
-const { createClient } = require("redis");
-let redisClient = createClient({ legacyMode: true });
-redisClient.connect().catch(console.error);
+// const RedisStore = require("connect-redis")(session);
+// const { createClient } = require("redis");
+// let redisClient = createClient({ legacyMode: true });
+// redisClient.connect().catch(console.error);
 
-app.use(
-  cors({
-    credentials: true,
-    origin: true,
-  })
-);
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,7 +23,7 @@ mongoose.connect("mongodb://localhost:27017/demo");
 app.use(
   session({
     secret: "keyboard cat",
-    store: new RedisStore({ client: redisClient }),
+    // store: new RedisStore({ client: redisClient }),
     resave: true,
     saveUninitialized: true,
     cookie: { secure: false, httpOnly: true, maxAge: 60 * 60 * 24 },

@@ -1,4 +1,4 @@
-var postAPI = "http://localhost:3030/single";
+var postAPI = "http://localhost:3031/single";
 
 document.querySelector(".btn-upload").addEventListener("click", () => {
   var input = document.querySelector(".image").files[0];
